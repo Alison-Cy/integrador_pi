@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tienda/login.dart';
 // import 'package:tienda/home.dart';
 
 class Register extends StatefulWidget {
@@ -79,6 +80,7 @@ class _RegisterState extends State<Register> {
           ],
         ),
       ),
+      
     );
   }
 
@@ -105,6 +107,15 @@ class _RegisterState extends State<Register> {
             },
             child: Text('Registrarse'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+              child: Text('Ir a Login'),
+            ),
         ],
       ),
     );
