@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tienda/home.dart';
-import 'package:tienda/register.dart';
+// import 'package:tienda/home.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
+
+  
   late String email , password;
   // late String password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String error = '';
-
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AppBar'),
+        title: Text('register'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -82,6 +82,14 @@ class _LoginState extends State<Login> {
     );
   }
 
+
+
+
+
+
+
+
+
   Widget formulario() {
     return Form(
       key: _formKey,
@@ -90,8 +98,7 @@ class _LoginState extends State<Login> {
           builEmail(),
           builPassword(),
           SizedBox(height: 20),
-          butonLogin(),
-          nuevoAqui(),
+          butonCrearUsuario(),
           TextButton(
             onPressed: () {
               // Acción al presionar el botón de registrarse
@@ -141,25 +148,16 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget butonLogin() {
+  Widget butonCrearUsuario() {
     return ElevatedButton(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
-          UserCredential? credentials = await login(email, password);
+          UserCredential? credentials = await crear(email, password);
           if (credentials != null && credentials.user != null) {
             // Verificar si el correo está verificado
-            if (credentials.user!.emailVerified) {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
-                (Route<dynamic> route) => false,
-              );
-            } else {
-              setState(() {
-                error = 'Verifica tu correo antes de acceder';
-              });
-            }
+            await credentials.user!.sendEmailVerification();
+            Navigator.of(context).pop();
           } 
           // else {
           //   setState(() {
@@ -172,34 +170,21 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget nuevoAqui(){
-    return Row(
-      children: [
-        Text('Es muy facil el '),
-        TextButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Register()));
-        }, child: Text('Registrarce'))
-
-      ],
-    );
-  }
-
-
-  Future<UserCredential?> login(String email, String password) async {
+  Future<UserCredential?> crear(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == 'email-already-in-use') {
         setState(() {
-          error = 'Usuario no encontrado';
+          error = 'el correo ya esta en uso';
         });
       } else if (e.code == 'wrong-password') {
         setState(() {
-          error = 'Contraseña incorrecta';
+          error = 'Contraseña debil';
         });
       } else {
         setState(() {
@@ -213,4 +198,11 @@ class _LoginState extends State<Login> {
     }
     return null;
   }
+
+
+
+
+
+
+
 }
