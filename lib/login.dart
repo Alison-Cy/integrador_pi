@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tienda/home.dart';
+import 'package:tienda/admin.dart';
 import 'package:tienda/register.dart';
 
 class Login extends StatefulWidget {
@@ -11,54 +11,64 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  late String email , password;
-  // late String password;
+  late String email, password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String error = '';
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('AppBar'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: Text('Opción uno'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Opción dos'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      // appBar: AppBar(
+      //   // title: Text('Inicio de Sesión'),
+      //   // Añadir título en la AppBar
+      // ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.blue,
+      //         ),
+      //         child: Text('Drawer Header'),
+      //       ),
+      //       ListTile(
+      //         title: Text('Opción uno'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: Text('Opción dos'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Bienvenido',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Ingresa tus credenciales',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              backgroundImage: const AssetImage('images/0.jpg'),
+              backgroundImage: AssetImage('images/0.jpg'),
             ),
             Offstage(
               offstage: error == '',
@@ -92,12 +102,6 @@ class _LoginState extends State<Login> {
           SizedBox(height: 20),
           butonLogin(),
           nuevoAqui(),
-          TextButton(
-            onPressed: () {
-              // Acción al presionar el botón de registrarse
-            },
-            child: Text('Registrarse'),
-          ),
         ],
       ),
     );
@@ -152,7 +156,7 @@ class _LoginState extends State<Login> {
             if (credentials.user!.emailVerified) {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => Admin()),
                 (Route<dynamic> route) => false,
               );
             } else {
@@ -160,30 +164,27 @@ class _LoginState extends State<Login> {
                 error = 'Verifica tu correo antes de acceder';
               });
             }
-          } 
-          // else {
-          //   setState(() {
-          //     error = 'Usuario o contraseña incorrectos';
-          //   });
-          // }
+          }
         }
       },
       child: Text('Ingresar'),
     );
   }
 
-  Widget nuevoAqui(){
+  Widget nuevoAqui() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Es muy facil el '),
-        TextButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Register()));
-        }, child: Text('Registrarce'))
-
+        Text('¿Nuevo aquí? '),
+        TextButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+          },
+          child: Text('Registrarse'),
+        ),
       ],
     );
   }
-
 
   Future<UserCredential?> login(String email, String password) async {
     try {

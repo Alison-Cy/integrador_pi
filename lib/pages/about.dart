@@ -7,7 +7,7 @@ class About extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Acerca de nosotros'),
+        // title: Text('Acerca de nosotros'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

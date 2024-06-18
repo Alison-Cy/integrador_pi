@@ -8,41 +8,41 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Productos'),
+        // title: Text('Productos'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Home'),
-            ),
-            ListTile(
-              title: Text('Productos'),
-              onTap: () {
-                Navigator.pop(context); // Cierra el Drawer
-              },
-            ),
-            ListTile(
-              title: Text('Acerca de nosotros'),
-              onTap: () {
-                Navigator.pop(context); // Cierra el Drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => About()), // Navega a la página de Acerca de nosotros
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.blue,
+      //         ),
+      //         child: Text('Home'),
+      //       ),
+      //       ListTile(
+      //         title: Text('Productos'),
+      //         onTap: () {
+      //           Navigator.pop(context); // Cierra el Drawer
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: Text('Acerca de nosotros'),
+      //         onTap: () {
+      //           Navigator.pop(context); // Cierra el Drawer
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => About()), // Navega a la página de Acerca de nosotros
+      //           );
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
         child: GridView.count(
           crossAxisCount: 2, // Número de columnas en la cuadrícula
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             _buildCard('Producto 1', 'Descripción del producto 1', 'images/0.jpg'),
             _buildCard('Producto 2', 'Descripción del producto 2', 'images/0.jpg'),
@@ -67,7 +67,7 @@ class Products extends StatelessWidget {
         children: [
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
               child: Image.asset(
                 imagePath,
                 fit: BoxFit.cover,
@@ -75,7 +75,7 @@ class Products extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
