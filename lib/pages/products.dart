@@ -7,50 +7,51 @@ class Products extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('Productos'),
-      ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: [
-      //       DrawerHeader(
-      //         decoration: BoxDecoration(
-      //           color: Colors.blue,
-      //         ),
-      //         child: Text('Home'),
-      //       ),
-      //       ListTile(
-      //         title: Text('Productos'),
-      //         onTap: () {
-      //           Navigator.pop(context); // Cierra el Drawer
-      //         },
-      //       ),
-      //       ListTile(
-      //         title: Text('Acerca de nosotros'),
-      //         onTap: () {
-      //           Navigator.pop(context); // Cierra el Drawer
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => About()), // Navega a la página de Acerca de nosotros
-      //           );
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      body: SafeArea(
-        child: GridView.count(
-          crossAxisCount: 2, // Número de columnas en la cuadrícula
-          padding: const EdgeInsets.all(16.0),
-          children: [
-            _buildCard('Producto 1', 'Descripción del producto 1', 'images/0.jpg'),
-            _buildCard('Producto 2', 'Descripción del producto 2', 'images/0.jpg'),
-            _buildCard('Producto 3', 'Descripción del producto 3', 'images/0.jpg'),
-            _buildCard('Producto 4', 'Descripción del producto 4', 'images/0.jpg'),
-            _buildCard('Producto 5', 'Descripción del producto 5', 'images/0.jpg'),
-            _buildCard('Producto 6', 'Descripción del producto 6', 'images/0.jpg'),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue, // Color de fondo deseado
+        ),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Explora nuestra colección de zapatos',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Encuentra los últimos modelos de Nike, Adidas, Puma y Reebok para todos los estilos y ocasiones.',
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2, // Número de columnas en la cuadrícula
+                  padding: const EdgeInsets.all(16.0),
+                  children: [
+                    _buildCard('Nike Air Max', 'Zapatillas deportivas Nike Air Max', 'images/0.jpg'),
+                    _buildCard('Adidas Ultraboost', 'Zapatillas deportivas Adidas Ultraboost', 'images/0.jpg'),
+                    _buildCard('Puma RS-X', 'Zapatillas deportivas Puma RS-X', 'images/0.jpg'),
+                    _buildCard('Reebok Classic', 'Zapatillas deportivas Reebok Classic', 'images/0.jpg'),
+                    _buildCard('Nike Air Force 1', 'Zapatillas deportivas Nike Air Force 1', 'images/0.jpg'),
+                    _buildCard('Adidas Superstar', 'Zapatillas deportivas Adidas Superstar', 'images/0.jpg'),
+                    _buildCard('Puma Suede', 'Zapatillas deportivas Puma Suede', 'images/0.jpg'),
+                    _buildCard('Reebok Nano X', 'Zapatillas deportivas Reebok Nano X', 'images/0.jpg'),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

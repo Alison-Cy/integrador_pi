@@ -103,76 +103,81 @@ class _AdminState extends State<Admin> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _productosFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No hay productos disponibles'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final producto = snapshot.data![index];
-                return Dismissible(
-                  key: Key(producto['id'].toString()),
-                  background: Container(color: Colors.red),
-                  direction: DismissDirection.endToStart,
-                  confirmDismiss: (direction) async {
-                    bool confirmado = await _mostrarDialogoEliminarProducto(
-                      context,
-                      producto['id'].toString(),
-                    );
-                    return confirmado;
-                  },
-                  child: ListTile(
-                    title: Text(producto["nombre"] ?? 'Sin nombre'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(producto["descripcion"] ?? 'Sin descripción'),
-                        Text('Categoría: ${producto["categoria"] ?? 'Sin categoría'}'),
-                        Text(
-                          'Precio: \$${(producto["precio"] as num?)?.toStringAsFixed(2) ?? '0.00'}',
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      ],
+      body: Container(
+        decoration: BoxDecoration(
+          // color: Colors.blue, // Color de fondo
+        ),
+        child: FutureBuilder<List<Map<String, dynamic>>>(
+          future: _productosFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No hay productos disponibles'));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final producto = snapshot.data![index];
+                  return Dismissible(
+                    key: Key(producto['id'].toString()),
+                    background: Container(color: Colors.red),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (direction) async {
+                      bool confirmado = await _mostrarDialogoEliminarProducto(
+                        context,
+                        producto['id'].toString(),
+                      );
+                      return confirmado;
+                    },
+                    child: ListTile(
+                      title: Text(producto["nombre"] ?? 'Sin nombre'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(producto["descripcion"] ?? 'Sin descripción'),
+                          Text('Categoría: ${producto["categoria"] ?? 'Sin categoría'}'),
+                          Text(
+                            'Precio: \$${(producto["precio"] as num?)?.toStringAsFixed(2) ?? '0.00'}',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditProductPage(producto: producto),
+                                ),
+                              ).then((value) {
+                                if (value != null && value) {
+                                  _cargarProductos(); // Actualizar productos después de editar
+                                }
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _mostrarDialogoEliminarProducto(context, producto['id'].toString());
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProductPage(producto: producto),
-                              ),
-                            ).then((value) {
-                              if (value != null && value) {
-                                _cargarProductos(); // Actualizar productos después de editar
-                              }
-                            });
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _mostrarDialogoEliminarProducto(context, producto['id'].toString());
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-        },
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

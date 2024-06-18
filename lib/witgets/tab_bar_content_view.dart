@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tienda/login.dart';
+import 'package:tienda/pages/home_screm.dart';
 import 'package:tienda/register.dart';
 import 'package:tienda/pages/about.dart';
-import 'package:tienda/pages/products.dart';
+import 'package:tienda/pages/products.dart';// Importar tu pantalla de inicio personalizada
 
 class TabBarContentView extends StatelessWidget {
   final TabController tabController;
@@ -14,7 +15,7 @@ class TabBarContentView extends StatelessWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        Center(child: Text('Home')),       // Pestaña 0 (Home)
+        Home_screm(),                       // Pestaña 0 (Home)
         Login(),                            // Pestaña 1 (Login)
         Register(),                         // Pestaña 2 (Register)
         Products(),                         // Pestaña 3 (Products)
