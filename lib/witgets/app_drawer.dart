@@ -45,7 +45,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Register', style: TextStyle(color: Colors.black87)),
+              title: Text('Registro', style: TextStyle(color: Colors.black87)),
               onTap: () {
                 Navigator.pop(context);
                 navigateToPage(2); // Navega a la pestaña de Register
